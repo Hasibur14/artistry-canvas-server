@@ -30,8 +30,26 @@ async function run() {
         const artCraftCollection = client.db('artistryCanvas').collection('artCraft');
 
 
+
+        app.get('/artCraft', async (req, res) => {
+            const cursor = artCraftCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+
+
+
+        app.get('/artCraft/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await coffeeCollection.findOne(query)
+            res.send(result);
+        })
+
+
+
         //add art and craft data
-        app.post("/addArtCraft", async (req, res) => {
+        app.post("/artCraft", async (req, res) => {
             console.log(req.body);
             const result = await artCraftCollection.insertOne(req.body);
             console.log(result);
