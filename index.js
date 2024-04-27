@@ -12,12 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 
-
-//assignment-10-artistry-canvas
-//KG4kqcwBYZ1VtdJc
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.lfxjcnl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-console.log(uri);
 
 
 
@@ -32,7 +27,17 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
 
-        const coffeeCollection = client.db('artandcraft').collection('craft');
+        const artCraftCollection = client.db('artistryCanvas').collection('artCraft');
+
+
+        //add art and craft data
+        app.post("/addArtCraft", async (req, res) => {
+            console.log(req.body);
+            const result = await artCraftCollection.insertOne(req.body);
+            console.log(result);
+            res.send(result)
+        })
+
 
 
 
@@ -42,16 +47,16 @@ async function run() {
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
 
-
     }
 }
+
 run().catch(console.dir);
 
 
 
 
 app.get('/', (req, res) => {
-    res.send('assignment is running')
+    res.send('Art and Craft is running')
 })
 
 app.listen(port, () => {
