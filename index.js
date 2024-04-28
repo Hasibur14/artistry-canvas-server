@@ -4,7 +4,7 @@ require('dotenv').config()
 const app = express();
 const port = process.env.PORT || 5000;
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 //middleware
@@ -24,6 +24,9 @@ const client = new MongoClient(uri, {
     }
 });
 
+
+
+
 async function run() {
     try {
 
@@ -38,13 +41,21 @@ async function run() {
         })
 
 
-
         app.get('/artCraft/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
-            const result = await coffeeCollection.findOne(query)
+            const result = await artCraftCollection.findOne(query)
             res.send(result);
         })
+
+
+          app.get('/myArtAndCraft/:userEmail', async (req, res) => {
+            const userEmail = req.params.userEmail;
+            console.log(userEmail)
+            const cursor = artCraftCollection.find({ userEmail }); 
+            const result = await cursor.toArray();
+            res.send(result);
+        });
 
 
 
