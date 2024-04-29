@@ -31,8 +31,7 @@ async function run() {
     try {
 
         const artCraftCollection = client.db('artistryCanvas').collection('artCraft');
-        const categoriesCollection = client.db('artistryCanvas').collection('artCraft2');
-
+        const categoriesCollection = client.db('artistryCanvas').collection('paintingDrawing');
 
 
         app.get('/artCraft', async (req, res) => {
@@ -59,7 +58,6 @@ async function run() {
         app.post("/artCraft", async (req, res) => {
             console.log(req.body);
             const result = await artCraftCollection.insertOne(req.body);
-            console.log(result);
             res.send(result)
         })
 
@@ -91,12 +89,15 @@ async function run() {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
             const result = await artCraftCollection.deleteOne(query)
-            console.log(result)
             res.send(result);
 
         })
 
-        //Art & Craft Categories Section...
+/**
+ * ----------------------------------------------------
+ *     Art & Craft Categories Section
+ * -----------------------------------------------------
+ */
 
         app.get('/artCraftCategories', async (req, res) => {
             const cursor = categoriesCollection.find();
@@ -104,6 +105,7 @@ async function run() {
             console.log(result)
             res.send(result);
         })
+
 
 
 
