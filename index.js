@@ -31,6 +31,7 @@ async function run() {
     try {
 
         const artCraftCollection = client.db('artistryCanvas').collection('artCraft');
+        const categoriesCollection = client.db('artistryCanvas').collection('artCraft2');
 
 
 
@@ -95,6 +96,14 @@ async function run() {
 
         })
 
+        //Art & Craft Categories Section...
+
+        app.get('/artCraftCategories', async (req, res) => {
+            const cursor = categoriesCollection.find();
+            const result = await cursor.toArray();
+            console.log(result)
+            res.send(result);
+        })
 
 
 
