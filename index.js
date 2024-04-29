@@ -40,7 +40,6 @@ async function run() {
             res.send(result);
         })
 
-
         app.get('/artCraft/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
@@ -48,16 +47,12 @@ async function run() {
             res.send(result);
         })
 
-
-          app.get('/myArtAndCraft/:userEmail', async (req, res) => {
+        app.get('/myArtAndCraft/:userEmail', async (req, res) => {
             const userEmail = req.params.userEmail;
-            console.log(userEmail)
-            const cursor = artCraftCollection.find({ userEmail }); 
+            const cursor = artCraftCollection.find({ userEmail });
             const result = await cursor.toArray();
             res.send(result);
         });
-
-
 
         //add art and craft data
         app.post("/artCraft", async (req, res) => {
@@ -67,6 +62,38 @@ async function run() {
             res.send(result)
         })
 
+        //Update data
+        app.put('/artCraftUpdate/:id', async (req, res) => {
+            const id = req.params.id
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updatedArtCraft = req.body;
+            const artAndCraft = {
+                $set: {
+                    item: updatedArtCraft.item,
+                    subcategory: updatedArtCraft.subcategory,
+                    description: updatedArtCraft.description,
+                    image: updatedArtCraft.image,
+                    rating: updatedArtCraft.rating,
+                    customization: updatedArtCraft.customization,
+                    time: updatedArtCraft.time,
+                    price: updatedArtCraft.price,
+                    price: updatedArtCraft.price,
+                }
+            }
+            const result = await artCraftCollection.updateOne(filter, artAndCraft, options);
+            res.send(result)
+        })
+
+        //Delete data
+        app.delete('/artCraftDelete/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await artCraftCollection.deleteOne(query)
+            console.log(result)
+            res.send(result);
+
+        })
 
 
 
