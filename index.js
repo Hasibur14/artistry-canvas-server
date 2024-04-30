@@ -96,17 +96,16 @@ async function run() {
 
         app.get('/art/:subcategory', async (req, res) => {
             const subcategory = req.params.subcategory;
-            console.log(subcategory)
             const cursor = artCraftCollection.find({ subcategory });
             const result = await cursor.toArray();
             res.send(result);
         });
 
-/**
- * ----------------------------------------------------
- *     Art & Craft Categories Section
- * -----------------------------------------------------
- */
+        /**
+         * ----------------------------------------------------
+         *     Art & Craft Categories Section
+         * -----------------------------------------------------
+         */
 
         app.get('/artCraftCategories', async (req, res) => {
             const cursor = categoriesCollection.find();
@@ -120,7 +119,6 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result);
         });
-
 
 
 
