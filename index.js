@@ -93,6 +93,15 @@ async function run() {
 
         })
 
+
+        app.get('/art/:subcategory', async (req, res) => {
+            const subcategory = req.params.subcategory;
+            console.log(subcategory)
+            const cursor = artCraftCollection.find({ subcategory });
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
 /**
  * ----------------------------------------------------
  *     Art & Craft Categories Section
@@ -102,9 +111,16 @@ async function run() {
         app.get('/artCraftCategories', async (req, res) => {
             const cursor = categoriesCollection.find();
             const result = await cursor.toArray();
-            console.log(result)
             res.send(result);
         })
+
+        app.get('/artCraftCategories/:subcategory', async (req, res) => {
+            const subcategory = req.params.subcategory;
+            const cursor = categoriesCollection.find({ subcategory });
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
 
 
 
